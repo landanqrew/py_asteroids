@@ -14,8 +14,16 @@ def main():
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    #Instantiate Player
+    # Instantiate Player
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+    # Instantiate Groups
+    group_updatable = pygame.sprite.Group()
+    group_drawable = pygame.sprite.Group()
+
+    # Assign objects to groups
+    group_updatable.add(player)
+    group_drawable.add(player)
 
     #GAME LOOP
     while True:
@@ -23,9 +31,16 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill(color="black")
-        player.update(dt)
+
+        # update updatables
+        group_updatable.update(dt)
+
+        # move player based on key inputs
         player.move(dt)
-        player.draw(screen)
+
+        # iterate over drawables and apply the draw method individually
+        for drawable in group_drawable:
+            drawable.draw(screen)
 
         # call last
         pygame.display.flip()
