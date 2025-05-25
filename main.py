@@ -20,11 +20,14 @@ def main():
     group_updatable = pygame.sprite.Group()
     group_drawable = pygame.sprite.Group()
     group_asteroids = pygame.sprite.Group()
+    group_shots = pygame.sprite.Group()
 
     # Specify that objects will be instantiated within these groups:
     Player.containers = (group_updatable, group_drawable)
     Asteroid.containers = (group_updatable, group_drawable, group_asteroids)
     AsteroidField.containers = (group_updatable)
+    Shot.containers = (group_updatable, group_drawable, group_shots)
+    
 
 
     # Instantiate Player
@@ -64,6 +67,7 @@ def main():
 
         # move player based on key inputs
         player.move(dt)
+        player.shoot()
 
         # iterate over drawables and apply the draw method individually
         for drawable in group_drawable:
