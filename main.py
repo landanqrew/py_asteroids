@@ -1,4 +1,5 @@
 import pygame
+import math
 from constants import *
 from player import *
 from asteroid import *
@@ -62,7 +63,16 @@ def main():
                 # pygame.display.quit()
                 return
             else:
-                continue
+                for shot in group_shots:
+                    if asteroid.check_collision(shot):
+                        shot.kill()
+                        if asteroid.radius * ASTEROID_DIVISION_RATE > ASTEROID_MIN_RADIUS:
+                            rand_angle = random.uniform(20,50)
+                            asteroid_field.spawn(math.floor(asteroid.radius * ASTEROID_DIVISION_RATE),asteroid.position, velocity=asteroid.velocity.rotate(rand_angle))
+                            asteroid_field.spawn(math.floor(asteroid.radius * ASTEROID_DIVISION_RATE),asteroid.position, velocity=asteroid.velocity.rotate(-1*rand_angle))
+
+                        asteroid.kill()
+                        
 
 
         # move player based on key inputs
