@@ -52,6 +52,16 @@ def main():
         # update updatables
         group_updatable.update(dt)
 
+        # check collisions
+        for asteroid in group_asteroids:
+            if asteroid.check_collision(player):
+                print('Game Over!')
+                # pygame.display.quit()
+                return
+            else:
+                continue
+
+
         # move player based on key inputs
         player.move(dt)
 
